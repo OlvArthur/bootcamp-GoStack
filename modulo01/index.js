@@ -10,6 +10,15 @@ server.use(express.json());
 
 const users = ['Arthur', 'Diego', 'Felipe'];
 
+server.use((req, res, next) => {
+  console.time('Request');
+  console.log(`Método: ${req.method}; URL: ${req.url}`);
+
+  next();
+
+  console.timeEnd('Request');
+});
+
 server.get('/users', (req, res) => {
   return res.json(users);
 });
@@ -33,6 +42,14 @@ server.put('/users/:index', (req, res) => {
   const { name } = req.body;
 
   users[index] = name;
+
+  return res.json(users);
+});
+
+server.delete('/users/:index', (req, res) => {
+  const { index } = req.params;
+
+  users.splice(index, 1);
 
   return res.json(users);
 });
