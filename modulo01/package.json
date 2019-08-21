@@ -7,6 +7,7 @@
     "dev": "nodemon index.js"
   },
   "dependencies": {
+    "eslint": "^6.2.1",
     "express": "^4.17.1"
   },
   "devDependencies": {
