@@ -19,7 +19,21 @@ class UserController {
   }
 
   async update(req, res) {
-    return res.json({ ok: true });
+    const user = await User.findOne({ where: { id: req.userId } });
+
+    const { email } = req.body;
+
+    user.email = email;
+
+    const { id, name, email } = user;
+
+    return res.json({
+      user: {
+        id,
+        name,
+        email,
+      },
+    });
   }
 }
 
