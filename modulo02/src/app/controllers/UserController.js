@@ -1,7 +1,7 @@
+/* eslint-disable class-methods-use-this */
 import User from '../models/User';
 
 class UserController {
-  // eslint-disable-next-line class-methods-use-this
   async store(req, res) {
     const userExists = await User.findOne({ where: { email: req.body.email } });
 
@@ -16,6 +16,10 @@ class UserController {
       email,
       provider,
     });
+  }
+
+  async update(req, res) {
+    return res.json({ ok: true });
   }
 }
 
