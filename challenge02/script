@@ -18,3 +18,10 @@ criação de uma migration
 criação do model do projeto, e.g. User.js
 criação do index.js na pasta database responsavel por adminstrar a conexão com BD e carregar os models existentes
 importtar a pasta database para o app após as configurações
+escrever codigo dos controladores com class`s e metodos de checagem de usuário na criação e login
+fazer o hash do usuário usando bcryptjs
+  yarn add bcryptjs
+  usar addHook para fazer um hash a partir da senha dada, antes de salvar os dados no BD
+  usar o hash criado para fazer checagem da senha ao logar
+  usar jsonwebtoken para gerar um token de login com expiração
+  criação do middleware de autenticação de rotas, e.g. update de senha e email
