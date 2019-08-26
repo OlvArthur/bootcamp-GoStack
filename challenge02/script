@@ -1,0 +1,20 @@
+criação da src com app, routes e server
+criação do constructor em App responsavel por instanciar o servidor
+configuração do nodemon e sucrase em desenvolvimento
+    nodemon.json => execMap ={ "js" : "sucrase-node ...}
+configuração do docker com BD
+configuração ESLint, prettier & editorconfig
+  yarn eslint --init
+    configuração com airbnb
+      apagar package-lock.json e dar yarn pra instalar as dependencias em pckage.json
+  yarn add prettier eslint-config-prettier eslint-plugin-prettier -D
+  yarn eslint --fix [pasta] --ext .js
+  gerar .editorconfig com o botão direito na raiz do projeto
+configuração sequelize e mvc
+  criação da pasta config e app com database.js e controllers/models (.js) respectivamente
+  criação do .sequelizerc
+criação de uma migration
+  yarn sequelize migration:create --name= [nome-da-migration]
+criação do model do projeto, e.g. User.js
+criação do index.js na pasta database responsavel por adminstrar a conexão com BD e carregar os models existentes
+importtar a pasta database para o app após as configurações
