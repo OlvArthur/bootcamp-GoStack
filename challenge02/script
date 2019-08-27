@@ -24,4 +24,8 @@ fazer o hash do usuário usando bcryptjs
   usar addHook para fazer um hash a partir da senha dada, antes de salvar os dados no BD
   usar o hash criado para fazer checagem da senha ao logar
   usar jsonwebtoken para gerar um token de login com expiração
-  criação do middleware de autenticação de rotas, e.g. update de senha e email
+criação do middleware de autenticação de rotas, e.g. update de senha e email
+criação da função update em UserController
+validação da entrada de usuário através do yup
+  yarn add yup
+  uso do .when e yarn.ref para validação
