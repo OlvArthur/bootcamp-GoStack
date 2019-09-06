@@ -35,3 +35,4 @@ adição do multer para arquivo de upload de imagens
 Criação de um Controller para providers para listar apenas os usuários com essa característica
 Filtragem de atributos retornados em index de providers com FindAll
 Inclusão de uma url com metodo get para retornar o caminho da imagem utilizando express.static no middleware em app.js
+Relacionamentos entre user_id e provider_id com coluna id de usuários com associate em models 
