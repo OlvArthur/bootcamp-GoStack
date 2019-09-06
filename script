@@ -29,3 +29,9 @@ criação da função update em UserController
 validação da entrada de usuário através do yup
   yarn add yup
   uso do .when e yarn.ref para validação
+adição do multer para arquivo de upload de imagens 
+  criação do multer.js em config para configuraçoes de resposta, nome e localização da pasta a ser usada para salvar
+  criação de uma nova migration para adição da coluna avatar_id na tabela users referenciando (belongsTo) a coluna de id da tabela files 
+Criação de um Controller para providers para listar apenas os usuários com essa característica
+Filtragem de atributos retornados em index de providers com FindAll
+Inclusão de uma url com metodo get para retornar o caminho da imagem utilizando express.static no middleware em app.js

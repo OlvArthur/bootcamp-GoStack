@@ -7,6 +7,12 @@ class File extends Model {
         // Campos que devem ser preenchidos na criação de usuário
         name: Sequelize.STRING,
         path: Sequelize.STRING,
+        url: {
+          type: Sequelize.VIRTUAL,
+          get() {
+            return `http://localhost:3333/files/${this.path}`;
+          },
+        },
       },
       {
         sequelize,
