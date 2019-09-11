@@ -36,3 +36,6 @@ Criação de um Controller para providers para listar apenas os usuários com es
 Filtragem de atributos retornados em index de providers com FindAll
 Inclusão de uma url com metodo get para retornar o caminho da imagem utilizando express.static no middleware em app.js
 Relacionamentos entre user_id e provider_id com coluna id de usuários com associate em models 
+criação de um AppointmentController para regisdtro de novos appointments
+  Login com um usário não provider e fornecimento do id de um provider no body da requisição
+  checagem do id de provider e retorno do appointment creado no BD
