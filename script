@@ -42,3 +42,4 @@ criação de um AppointmentController para regisdtro de novos appointments
 validação da data, garantindo que sejam apenas appointments de hora em hora e em datas futuras
   yarn add date-fns@next
 checar a disponibilidade de horário para criação de um appointment
+criação da listagem de appointments com index
