@@ -28,13 +28,10 @@ class User extends Model {
     return this;
   }
 
-<<<<<<< HEAD
-=======
   static associate(models) {
     this.belongsTo(models.File, { foreignKey: 'avatar_id', as: 'avatar' });
   }
 
->>>>>>> cdf85f522ceee73a96c386ac098c57d7429d1f90
   checkPassword(password) {
     return bcrypt.compare(password, this.password_hash);
   }
