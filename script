@@ -39,3 +39,6 @@ Relacionamentos entre user_id e provider_id com coluna id de usuários com assoc
 criação de um AppointmentController para regisdtro de novos appointments
   Login com um usário não provider e fornecimento do id de um provider no body da requisição
   checagem do id de provider e retorno do appointment creado no BD
+validação da data, garantindo que sejam apenas appointments de hora em hora e em datas futuras
+  yarn add date-fns@next
+checar a disponibilidade de horário para criação de um appointment
