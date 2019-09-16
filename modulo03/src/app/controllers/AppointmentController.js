@@ -4,13 +4,18 @@ import * as Yup from 'yup';
 import Appointment from '../models/Appointment';
 import User from '../models/User';
 import File from '../models/File';
+import Notification from '../schemas/Notification';
 
 class AppointmentController {
   async index(req, res) {
+    const { page = 1 } = req.query;
+
     const appointmets = await Appointment.findAll({
       where: { user_id: req.userId, canceled_at: null },
       order: ['date'],
       attributes: ['id', 'date'],
+      limit: 20, //number of listed appointments
+      offset: (page - 1) * 20, // number of appointments to skip according to the page
       include: [
         {
           model: User,
@@ -89,6 +94,9 @@ class AppointmentController {
       provider_id,
       date,
     });
+    /**
+     * Notify appointment to provider
+     */
 
     return res.json(appointment);
   }
