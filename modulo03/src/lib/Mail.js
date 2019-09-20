@@ -21,7 +21,7 @@ class Mail {
    * somar as mensagens padrões do email com a mensagem em si
    */
   sendMail(message) {
-    return this.trasnporter.sendMail({
+    return this.transporter.sendMail({
       ...mailConfig.default,
       ...message,
     });
