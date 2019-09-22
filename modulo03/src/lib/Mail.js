@@ -15,7 +15,7 @@ class Mail {
       secure,
 
       // Nestes casos o interrogação age com if com condição "auth.user",
-      //ação "auth" e then "null"
+      //ação "auth" e else "null"
       auth: auth.user ? auth : null,
     });
 
