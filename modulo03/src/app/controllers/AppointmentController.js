@@ -17,7 +17,7 @@ class AppointmentController {
     const appointmets = await Appointment.findAll({
       where: { user_id: req.userId, canceled_at: null },
       order: ['date'],
-      attributes: ['id', 'date'],
+      attributes: ['id', 'date', 'past', 'cancelable'],
       limit: 20, //number of listed appointments
       offset: (page - 1) * 20, // number of appointments to skip according to the page
       include: [
