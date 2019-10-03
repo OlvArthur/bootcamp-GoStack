@@ -4,7 +4,7 @@ class Meetup extends Model {
   static init(sequelize) {
     super.init(
       {
-        id: Sequelize.INTEGER,
+        description: Sequelize.STRING,
         title: Sequelize.STRING,
         locale: Sequelize.STRING,
         date: Sequelize.DATE,
@@ -13,6 +13,8 @@ class Meetup extends Model {
         sequelize,
       }
     );
+
+    return this;
   }
 
   static associate(models) {

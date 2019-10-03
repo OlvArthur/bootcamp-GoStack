@@ -12,7 +12,7 @@ class User extends Model {
         //apenas no lado do codigo
         password: Sequelize.VIRTUAL,
         password_hash: Sequelize.STRING,
-        provider: Sequelize.BOOLEAN,
+        manager: Sequelize.BOOLEAN,
       },
       {
         sequelize,
