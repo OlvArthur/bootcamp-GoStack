@@ -8,8 +8,6 @@ class Meetup extends Model {
         title: Sequelize.STRING,
         locale: Sequelize.STRING,
         date: Sequelize.DATE,
-        //manager_id: Sequelize.INTEGER,
-        //banner_id: Sequelize.INTEGER,
       },
       {
         sequelize,

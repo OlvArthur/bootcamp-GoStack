@@ -1,10 +1,32 @@
 import Meetup from '../models/Meetup';
 import User from '../models/User';
 import File from '../models/File';
+import Registration from '../models/Registration';
 
 import { isBefore, startOfHour, parseISO } from 'date-fns';
 
 class MeetupController {
+  async index(req, res) {
+    const { page = 1 } = req.query;
+
+    const meetups = await Registration.findAll({
+      where: { user_id: req.userId },
+      order: ['date'],
+      attributes: ['id', 'title', 'description', 'locale', 'date'],
+      limit: 20, //number of listed appointments
+      offset: (page - 1) * 20,
+      include: [
+        {
+          model: File,
+          as: 'banner',
+          attributes: ['url', 'path', 'id'],
+        },
+      ],
+    });
+
+    return res.json(meetups);
+  }
+
   async store(req, res) {
     const checkManager = await User.findOne({
       where: {
@@ -66,7 +88,23 @@ class MeetupController {
         .json({ error: 'You can only update meetups you manage' });
     }
 
-    return res.json();
+    const { title, date, description, locale, banner_id } = await meetup.update(
+      req.body
+    );
+
+    const hourStart = startOfHour(parseISO(date));
+
+    if (isBefore(meetup.date, new Date()) || isBefore(hourStart, new Date())) {
+      return res.status(400).json({ error: 'Past Dates are not allowed' });
+    }
+
+    return res.json({
+      title,
+      date,
+      description,
+      locale,
+      banner_id,
+    });
   }
 }
 
