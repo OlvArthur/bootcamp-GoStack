@@ -24,6 +24,7 @@ class MeetupController {
 */
     const { title, description, locale, date } = req.body;
 
+    console.log(req.userId);
     const meetup = await Meetup.create({
       title,
       description,
