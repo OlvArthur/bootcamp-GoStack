@@ -110,8 +110,9 @@ class MeetupController {
   async delete(req, res) {
     const { id } = req.params;
 
-    const meetup = await Meetup.findByPk(id, {
-      attributes: ['id', 'title', 'description', 'date'],
+    const meetup = await Meetup.findOne({
+      where: { id },
+      //attributes: ['id', 'title', 'description', 'date'],
       include: [
         {
           model: File,
