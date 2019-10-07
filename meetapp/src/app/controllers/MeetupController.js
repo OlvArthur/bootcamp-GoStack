@@ -106,6 +106,39 @@ class MeetupController {
       banner_id,
     });
   }
+
+  async delete(req, res) {
+    const { id } = req.params;
+
+    const meetup = await Meetup.findByPk(id, {
+      attributes: ['id', 'title', 'description', 'date'],
+      include: [
+        {
+          model: File,
+          as: 'banner',
+          attributes: ['id', 'name', 'path'],
+        },
+      ],
+    });
+
+    if (!meetup) {
+      return res.status(404).json({ error: "Meetup doesn't exist" });
+    }
+    console.log(meetup.manager_id, req.userId);
+    if (meetup.manager_id !== req.userId) {
+      return res
+        .status(400)
+        .json({ error: 'You can only cancel meetups you manage' });
+    }
+
+    if (isBefore(meetup.date, new Date())) {
+      return res.status(400).json({ error: 'This meetup already happened' });
+    }
+
+    await meetup.destroy();
+
+    return res.json(meetup);
+  }
 }
 
 export default new MeetupController();

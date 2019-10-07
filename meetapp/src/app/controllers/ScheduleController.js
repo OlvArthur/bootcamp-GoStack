@@ -6,6 +6,7 @@ import User from '../models/User';
 
 class ScheduleController {
   async index(req, res) {
+    //Método que checa as listagens do manager de um determinado dia
     const checkManager = await User.findOne({
       where: { id: req.userId, manager: true },
     });
