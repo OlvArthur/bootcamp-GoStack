@@ -1,12 +1,19 @@
 import Meetup from '../models/Meetup';
 import Registration from '../models/Registration';
+import User from '../models/User';
+
+import { isBefore, startOfHour, parseISO } from 'date-fns';
 
 class RegistrationController {
   async store(req, res) {
     const { id } = req.params;
 
-    const meetup = await Meetup.findOne({
-      where: { id },
+    const meetup = await Meetup.findByPk(id, {
+      include: [
+        {
+          model: User,
+        },
+      ],
     });
 
     if (meetup.manager_id == req.userId) {
@@ -15,18 +22,39 @@ class RegistrationController {
         .json({ error: 'You cant subscribe to your own meetup' });
     }
 
-    const registration = await Registration.findOrCreate({
-      where: { meetup_id: id },
-      defaults: {
-        meetup_id: id,
+    if (isBefore(meetup.date, new Date())) {
+      return res.status(400).json({ error: 'Past dates are not allowed' });
+    }
+
+    const doubleSubscription = await Registration.findOne({
+      where: {
         participant_id: req.userId,
-        manager_id: meetup.manager_id,
+        meetup_id: id,
       },
     });
+    if (doubleSubscription) {
+      return res.status(401).json({ error: 'You have already subscribed' });
+    }
 
-    registration.participant_id = [req.userId];
+    const sameDate = await Registration.findAll({
+      where: { participant_id: req.userId },
+      include: [
+        {
+          model: Meetup,
+          as: 'meetup',
+          attributes: ['date'],
+        },
+      ],
+    });
 
-    return res.json(registration);
+    console.log(sameDate.Meetup);
+
+    const registration = await Registration.create({
+      participant_id: req.userId,
+      meetup_id: meetup.id,
+    });
+
+    return res.json(sameDate);
   }
 }
 

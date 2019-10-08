@@ -1,5 +1,6 @@
 import Sequelize, { Model } from 'sequelize';
 import bcrypt from 'bcryptjs';
+import Registration from './Registration';
 
 class User extends Model {
   static init(sequelize) {
@@ -31,10 +32,12 @@ class User extends Model {
   static associate(models) {
     this.belongsTo(models.File, { foreignKey: 'avatar_id', as: 'avatar' });
     this.belongsToMany(models.Meetup, {
-      foreignKey: 'meetup_id',
-      through: 'registration',
-      as: 'meetup',
+      foreignKey: 'participant_id',
+      through: 'registrations',
     });
+
+    //this.hasMany(models.Meetup, { foreignKey: 'manager_id', as: 'manager' });
+    //this.hasMany(models.Registration);
   }
 
   checkPassword(password) {

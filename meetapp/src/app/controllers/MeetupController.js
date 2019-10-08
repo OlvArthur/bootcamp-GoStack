@@ -56,7 +56,6 @@ class MeetupController {
       return res.status(400).json({ error: 'Past dates are not allowed' });
     }
 
-    console.log(title);
     const meetup = await Meetup.create({
       title,
       description,
