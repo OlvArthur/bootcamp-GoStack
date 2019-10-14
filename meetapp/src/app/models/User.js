@@ -32,7 +32,7 @@ class User extends Model {
   static associate(models) {
     this.belongsTo(models.File, { foreignKey: 'avatar_id', as: 'avatar' });
     this.belongsToMany(models.Meetup, {
-      foreignKey: 'participant_id',
+      foreignKey: 'meetup_id',
       through: 'registrations',
     });
 

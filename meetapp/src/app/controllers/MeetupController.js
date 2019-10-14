@@ -3,6 +3,8 @@ import User from '../models/User';
 import File from '../models/File';
 import Registration from '../models/Registration';
 
+import Mail from '../../lib/Mail';
+
 import { isBefore, startOfHour, parseISO } from 'date-fns';
 
 class MeetupController {
@@ -109,10 +111,15 @@ class MeetupController {
   async delete(req, res) {
     const { id } = req.params;
 
-    const meetup = await Meetup.findOne({
-      where: { id },
-      //attributes: ['id', 'title', 'description', 'date'],
+    const meetup = await Meetup.findByPk(req.params.id, {
+      //where: { id },
+      attributes: ['id', 'title', 'description', 'date'],
       include: [
+        {
+          model: User,
+          as: 'manager',
+          attributes: ['id', 'name', 'email'],
+        },
         {
           model: File,
           as: 'banner',
@@ -124,8 +131,8 @@ class MeetupController {
     if (!meetup) {
       return res.status(404).json({ error: "Meetup doesn't exist" });
     }
-    console.log(meetup.manager_id, req.userId);
-    if (meetup.manager_id !== req.userId) {
+    console.log(meetup.manager.id, req.userId);
+    if (meetup.manager.id !== req.userId) {
       return res
         .status(400)
         .json({ error: 'You can only cancel meetups you manage' });
@@ -136,6 +143,12 @@ class MeetupController {
     }
 
     await meetup.destroy();
+
+    await Mail.sendMail({
+      to: `${meetup.manager.name} <${meetup.manager.email}>`,
+      subject: 'Meetup cancelado com sucesso',
+      text: 'Você fez um cancelamento com sucesso',
+    });
 
     return res.json(meetup);
   }

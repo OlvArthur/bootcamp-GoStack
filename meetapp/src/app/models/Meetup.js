@@ -27,11 +27,12 @@ class Meetup extends Model {
   static associate(models) {
     this.belongsTo(models.File, { foreignKey: 'banner_id', as: 'banner' });
     this.belongsToMany(models.User, {
-      foreignKey: 'meetup_id',
+      foreignKey: 'participant_id',
+      as: 'participant',
       through: 'registrations',
     });
 
-    //this.belongsTo(models.User, { foreignKey: 'manager_id', as: 'manager' });
+    this.belongsTo(models.User, { foreignKey: 'manager_id', as: 'manager' });
     //this.hasMany(models.Registration, { foreignKey: 'meetup_id' });
   }
 }
