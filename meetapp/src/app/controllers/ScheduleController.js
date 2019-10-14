@@ -7,16 +7,14 @@ import User from '../models/User';
 class ScheduleController {
   async index(req, res) {
     //Método que checa as listagens do manager de um determinado dia
-    /*const checkManager = await User.findOne({
+    const checkManager = await User.findOne({
       where: { id: req.userId, manager: true },
     });
 
     if (!checkManager) {
       return res.status(401).json({ error: 'You must be a manager' });
     }
-    */
-
-    const { page = 1 } = req.query;
+    const { pages = 1 } = req.query;
 
     const { date } = req.query;
     const parsedDate = parseISO(date);
@@ -29,15 +27,8 @@ class ScheduleController {
         },
       },
       order: ['date'],
-      include: [
-        {
-          model: User,
-          as: 'manager',
-          attributes: ['name', 'email'],
-        },
-      ],
       limit: 20,
-      offset: (page - 1) * 20,
+      offset: (pages - 1) * 20,
     });
 
     return res.json(schedule);
