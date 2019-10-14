@@ -36,25 +36,32 @@ class RegistrationController {
       return res.status(401).json({ error: 'You have already subscribed' });
     }
 
-    const sameDate = await Registration.findAll({
+    const checkDate = await Registration.findOne({
       where: { participant_id: req.userId },
       include: [
         {
           model: Meetup,
           as: 'meetup',
-          attributes: ['date'],
+          required: true,
+          where: {
+            date: meetup.date,
+          },
         },
       ],
     });
 
-    console.log(sameDate.Meetup);
+    if (checkDate) {
+      return res.status(404).json({
+        error: 'You are subscribed to a diferent meetup at the same time',
+      });
+    }
 
     const registration = await Registration.create({
       participant_id: req.userId,
       meetup_id: meetup.id,
     });
 
-    return res.json(sameDate);
+    return res.json(registration);
   }
 }
 
