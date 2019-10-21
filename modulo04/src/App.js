@@ -2,9 +2,10 @@
 import React from 'react';
 
 import './App.css';
+import teste from './assets/teste.png';
 
 function App() {
-  return <h1>Hello Arthur</h1>;
+  return <img width="1100" src={teste} />;
 }
 
 export default App;
