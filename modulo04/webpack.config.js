@@ -9,6 +9,8 @@ module.exports = {
     path: path.resolve(__dirname, 'public'),
     filename: 'bundle.js',
   },
+
+  //Caminho de conteudo para o -dev-server
   devServer: {
     contentBase: path.resolve(__dirname, 'public'),
   },
