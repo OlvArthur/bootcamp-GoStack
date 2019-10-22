@@ -3,9 +3,10 @@ import React from 'react';
 
 import './App.css';
 import teste from './assets/teste.png';
+import TechList from './components/TechList';
 
 function App() {
-  return <img width="1100" src={teste} />;
+  return <TechList />;
 }
 
 export default App;
