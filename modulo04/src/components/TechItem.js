@@ -1,8 +1,7 @@
-// Quando o componente não apresenta a ncessidade de manipular
+// Quando o componente não apresenta a necessidade de manipular
 //algum tipo de estado/state é possível usar o function
-
 import React from 'react';
-
+import PropTypes from 'prop-types';
 //É possível usar desestruturação passando {techs} passar props e usar
 //props.tech, props.onDelete, etc
 function TechItem({ tech, onDelete }) {
@@ -15,5 +14,14 @@ function TechItem({ tech, onDelete }) {
     </li>
   );
 }
+
+TechItem.defaultProps = {
+  tech: 'Oculto',
+};
+
+TechItem.propTypes = {
+  tech: PropTypes.string,
+  onDelete: PropTypes.func.isRequired,
+};
 
 export default TechItem;
