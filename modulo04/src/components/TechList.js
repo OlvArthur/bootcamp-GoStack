@@ -10,8 +10,28 @@ class TechList extends Component {
 
   state = {
     newTech: '',
-    techs: ['NodeJS', 'ReactJS', 'React Native'],
+    techs: [],
   };
+
+  //Executado assim que o componente aparece em tela
+  componentDidMount() {
+    const techs = localStorage.getItem('techs');
+
+    if (techs) {
+      this.setState({ techs: JSON.parse(techs) });
+    }
+  }
+
+  //Executado sempre que houver alterações nas props ou estado
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.techs !== this.state.techs) {
+      //local storage não aceita arrays, portanto transforma-se em JSON
+      localStorage.setItem('techs', JSON.stringify(this.state.techs));
+    }
+  }
+
+  //Executado sempre que o componente deixa de existir
+  componentWillUnmount() {}
 
   //Funções criadas pelo desenvolvedor, precisam ser no formato arrow function
   //para que tenham acesso a variaveis do tipo this
