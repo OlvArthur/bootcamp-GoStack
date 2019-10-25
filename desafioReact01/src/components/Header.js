@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 
 function Header() {
   return (
@@ -6,6 +6,10 @@ function Header() {
       <nav>
         <img src="https://i.imgur.com/KDIDiSE.png" />
       </nav>
+      <div>
+        <span>Meu perfil</span>
+        <i className="material-icons">account_circle</i>
+      </div>
     </header>
   );
 }
