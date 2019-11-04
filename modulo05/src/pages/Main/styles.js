@@ -96,5 +96,18 @@ export const List = styled.ul`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
+
+    & + li {
+      border-top: 1px solid #eee;
+    }
+
+    a {
+      color: #7159c1;
+      text-decoration: none;
+    }
   }
 `;
+
+// & + li Serve para aplicar os efeitos apenas a um li seguido outro li.
+// Por exemplo, em um sequencia de li, apenas o primeiro não terá efeito aplicado.
