@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+
 import api from '../../services/api';
 
 // import { Container } from './styles';
@@ -7,6 +8,14 @@ import api from '../../services/api';
 // portanto match.params.repository, faz menção ao :repository na rota
 
 export default class Repository extends Component {
+  static propTypes = {
+    match: PropTypes.shape({
+      params: PropTypes.shape({
+        repository: PropTypes.string,
+      }),
+    }).isRequired,
+  };
+
   state = {
     repository: {},
     loading: true,
