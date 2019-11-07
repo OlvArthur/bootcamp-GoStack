@@ -42,8 +42,27 @@ export const Owner = styled.header`
   }
 `;
 
-export const IssueList = styled.img`
+export const IssueList = styled.ul`
+  padding-top: 30px;
+  margin-top: 30px;
+  border-top: 1px solid #eee;
+  list-style: none;
+
+  li {
+    display: flex;
+    padding: 15px 10px;
+    align-items: center;
+    border: 1px solid #eee;
+    border-radius: 4px;
+    & + li {
+      margin-top: 20px;
+    }
+  }
+
   img {
-    width: 30px;
+    width: 36px;
+    height: 36px;
+    border: 2px solid #eee;
+    border-radius: 50%;
   }
 `;
