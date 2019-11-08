@@ -14,6 +14,7 @@ export default class Main extends Component {
     repos: [],
     newRepo: '',
     loading: false,
+    error: false,
   };
 
   // carregar os dados do localStorage
@@ -44,25 +45,35 @@ export default class Main extends Component {
 
     // Previne o refresh na pagina
     e.preventDefault();
-    const response = await api.get(`/repos/${newRepo}`);
 
-    const data = {
-      name: response.data.full_name,
-    };
+    try {
+      const response = await api.get(`/repos/${newRepo}`);
 
-    // if (data) {
-    this.setState({
-      repos: [...repos, data],
-      newRepo: '',
-      loading: false,
-    });
+      const data = {
+        name: response.data.full_name,
+      };
+
+      // if (data) {
+      this.setState({
+        repos: [...repos, data],
+        newRepo: '',
+        loading: false,
+        error: false,
+      });
+    } catch {
+      this.setState({
+        newRepo: '',
+        loading: false,
+        error: true,
+      });
+    }
     // } else {
     // this.setState({ loading: false });
     // }
   };
 
   render() {
-    const { newRepo, loading, repos } = this.state;
+    const { newRepo, loading, repos, error } = this.state;
 
     return (
       /** Em casos de 2 ou mais chaveamentos, é recomendado
@@ -81,7 +92,7 @@ export default class Main extends Component {
           Repositórios
         </h1>
 
-        <Form onSubmit={this.handleSubmit}>
+        <Form error={error} onSubmit={this.handleSubmit}>
           <input
             type="text"
             placeholder="Adicionar repositorio"
@@ -102,7 +113,12 @@ export default class Main extends Component {
           {repos.map(repo => (
             <li key={repo.name}>
               <span>{repo.name}</span>
-              <Link to={`/repository/${encodeURIComponent(repo.name)}`}>
+              <Link
+                to={{
+                  pathname: `/repository/${encodeURIComponent(repo.name)}`,
+                  state: 'closed',
+                }}
+              >
                 Detalhes
               </Link>
             </li>

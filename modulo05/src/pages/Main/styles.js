@@ -11,7 +11,7 @@ export const Form = styled.form`
     /*Faz o elemento ocupar todo espaço disponível */
     flex: 1;
 
-    border: 1px solid #eee;
+    border: ${props => (props.error ? ' 1px solid red' : '1px solid #eee')};
 
     /* Mesma função do margin, porém entre os elementos e a borda interna */
     padding: 10px 15px;

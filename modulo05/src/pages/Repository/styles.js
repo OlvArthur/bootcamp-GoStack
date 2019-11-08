@@ -40,11 +40,22 @@ export const Owner = styled.header`
     text-decoration: none;
     font-size: 16px;
   }
+
+  li {
+    margin-top: 30px;
+    list-style: none;
+
+    a {
+      & + a {
+        margin-left: 10px;
+      }
+    }
+  }
 `;
 
 export const IssueList = styled.ul`
   padding-top: 30px;
-  margin-top: 30px;
+  margin-top: 5px;
   border-top: 1px solid #eee;
   list-style: none;
 
@@ -79,6 +90,7 @@ export const IssueList = styled.ul`
         a {
           text-decoration: none;
           color: #333;
+          justify-content: center;
 
           &:hover {
             color: #7159c1;

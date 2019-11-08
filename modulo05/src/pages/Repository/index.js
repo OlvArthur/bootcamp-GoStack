@@ -15,8 +15,11 @@ export default class Repository extends Component {
   static propTypes = {
     match: PropTypes.shape({
       params: PropTypes.shape({
-        repository: PropTypes.string,
+        handle: PropTypes.string,
       }),
+    }).isRequired,
+    location: PropTypes.shape({
+      state: PropTypes.string,
     }).isRequired,
   };
 
@@ -27,9 +30,10 @@ export default class Repository extends Component {
   };
 
   async componentDidMount() {
-    const { match } = this.props;
+    const { match, location } = this.props;
 
-    const repoName = decodeURIComponent(match.params.repository);
+    const repoName = decodeURIComponent(match.params.handle);
+    const { state } = location;
 
     // Promise permite que as duas chamadas a api ( no caso github) sejam feitas
     // simultaneamente, impedindo que uma seja executada apenas
@@ -40,7 +44,7 @@ export default class Repository extends Component {
         // Este objeto serve como req.params, ou seja, pode tbm ser
         // passado pela url eg.. /issues?state=open&per_page=5
         params: {
-          state: 'open',
+          state,
           per_page: 5,
         },
       }),
@@ -71,6 +75,11 @@ export default class Repository extends Component {
           <img src={repository.owner.avatar_url} alt={repository.owner.login} />
           <h1>{repository.name}</h1>
           <p>{repository.description}</p>
+          <li>
+            <a href="">Open</a>
+            <a href="">Closed</a>
+            <a href="">All</a>
+          </li>
         </Owner>
         <IssueList>
           {issues.map(issue => (
