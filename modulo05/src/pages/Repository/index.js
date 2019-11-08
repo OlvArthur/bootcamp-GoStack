@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 import api from '../../services/api';
 import Container from '../../Components/Container';
-import { Loading, Owner, IssueList } from './styles';
+import { Loading, Owner, IssueList, Label } from './styles';
 
 // import { Container } from './styles';
 // As props recebidas estão vindo do arquivo routes,
@@ -79,7 +79,11 @@ export default class Repository extends Component {
               <div>
                 <strong>
                   <a href={issue.html_url}>{issue.title}</a>
-                  {/** LABELS */}
+                  {issue.labels.map(label => (
+                    <Label color={label.color} key={String(label.id)}>
+                      {label.name}
+                    </Label>
+                  ))}
                 </strong>
                 <p>{issue.user.login}</p>
               </div>
