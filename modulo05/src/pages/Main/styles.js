@@ -3,7 +3,7 @@ import styled, { css, keyframes } from 'styled-components';
 export const Form = styled.form`
   /* As três caracteristicas garantem que os elementos, fiquem
   um ao lado do outro independente do tamanho */
-  margin-top: 30px;
+  margin-top: 10px;
   display: flex;
   flex-direction: row;
 
@@ -86,3 +86,66 @@ export const List = styled.ul`
 
 // & + li Serve para aplicar os efeitos apenas a um li seguido outro li.
 // Por exemplo, em um sequencia de li, apenas o primeiro não terá efeito aplicado.
+export const Wrapper = styled.div`
+  flex-direction: row;
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+export const Item = styled.div`
+  display: flex;
+  align-items: center;
+  height: 48px;
+  position: relative;
+  font-size: 12px;
+`;
+
+export const RadioButtonLabel = styled.label`
+  position: absolute;
+  top: 25%;
+  left: 15px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: white;
+  border: 1px solid #bebebe;
+`;
+
+export const RadioButton = styled.input`
+  opacity: 0;
+  z-index: 1;
+  border-radius: 50%;
+  width: 24px;
+  height: 15px;
+  margin: 15px;
+
+  &:hover ~ ${RadioButtonLabel} {
+    background: #bebebe;
+    &::after {
+      content: '';
+      display: block;
+      border-radius: 50%;
+      width: 12px;
+      height: 12px;
+      margin: 6px;
+      background: #eeeeee;
+    }
+  }
+
+  &:checked + ${RadioButtonLabel} {
+    background: #db7290;
+    border: 1px solid #db7290;
+    &::after {
+      content: '';
+      display: block;
+      border-radius: 50%;
+      width: 12px;
+      height: 12px;
+      margin: 6px;
+      box-shadow: 1px 3px 3px 1px rgba(0, 0, 0, 0.1);
+      background: white;
+    }
+  }
+`;

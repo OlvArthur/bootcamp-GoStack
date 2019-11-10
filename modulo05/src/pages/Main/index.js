@@ -5,7 +5,15 @@ import { Link } from 'react-router-dom';
 import api from '../../services/api';
 
 import Container from '../../Components/Container';
-import { Form, SubmitButton, List } from './styles';
+import {
+  Form,
+  SubmitButton,
+  List,
+  Item,
+  RadioButton,
+  RadioButtonLabel,
+  Wrapper,
+} from './styles';
 // import Repository from '../Repository';
 
 export default class Main extends Component {
@@ -15,6 +23,7 @@ export default class Main extends Component {
     newRepo: '',
     loading: false,
     error: false,
+    state: '',
   };
 
   // carregar os dados do localStorage
@@ -36,6 +45,10 @@ export default class Main extends Component {
 
   handleInputChange = e => {
     this.setState({ newRepo: e.target.value });
+  };
+
+  handleSelectChange = e => {
+    this.setState({ state: e.target.value });
   };
 
   handleSubmit = async e => {
@@ -73,7 +86,7 @@ export default class Main extends Component {
   };
 
   render() {
-    const { newRepo, loading, repos, error } = this.state;
+    const { newRepo, loading, repos, error, state } = this.state;
 
     return (
       /** Em casos de 2 ou mais chaveamentos, é recomendado
@@ -87,10 +100,45 @@ export default class Main extends Component {
        */
 
       <Container>
-        <h1>
-          <FaGithubAlt />
-          Repositórios
-        </h1>
+        <Wrapper>
+          <h1>
+            <FaGithubAlt />
+            Repositórios
+          </h1>
+
+          <h1>
+            <Item>
+              <RadioButton
+                type="radio"
+                name="radio"
+                value="open"
+                onChange={this.handleSelectChange}
+              />
+              <RadioButtonLabel />
+              <div>Open</div>
+            </Item>
+            <Item>
+              <RadioButton
+                type="radio"
+                name="radio"
+                value="closed"
+                onChange={this.handleSelectChange}
+              />
+              <RadioButtonLabel />
+              <div>Closed</div>
+            </Item>
+            <Item>
+              <RadioButton
+                type="radio"
+                name="radio"
+                value="all"
+                onChange={this.handleSelectChange}
+              />
+              <RadioButtonLabel />
+              <div>All</div>
+            </Item>
+          </h1>
+        </Wrapper>
 
         <Form error={error} onSubmit={this.handleSubmit}>
           <input
@@ -116,7 +164,7 @@ export default class Main extends Component {
               <Link
                 to={{
                   pathname: `/repository/${encodeURIComponent(repo.name)}`,
-                  state: 'closed',
+                  param1: state,
                 }}
               >
                 Detalhes

@@ -40,17 +40,6 @@ export const Owner = styled.header`
     text-decoration: none;
     font-size: 16px;
   }
-
-  li {
-    margin-top: 30px;
-    list-style: none;
-
-    a {
-      & + a {
-        margin-left: 10px;
-      }
-    }
-  }
 `;
 
 export const IssueList = styled.ul`
