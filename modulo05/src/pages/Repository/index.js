@@ -45,6 +45,7 @@ export default class Repository extends Component {
         // passado pela url eg.. /issues?state=open&per_page=5
         params: {
           state,
+          page: 2,
           per_page: 5,
         },
       }),
