@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { FaGithubAlt, FaPlus, FaSpinner } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
+import { throwError } from 'rxjs';
 import api from '../../services/api';
 
 import Container from '../../Components/Container';
@@ -53,12 +54,17 @@ export default class Main extends Component {
   handleSubmit = async e => {
     const { newRepo, repos } = this.state;
 
+    const checkDuplicate = repos.map(repo => repo == e.target.value);
+    console.log(e.target.value);
+
     this.setState({ loading: true });
 
     // Previne o refresh na pagina
     e.preventDefault();
 
     try {
+      checkDuplicate.map(duplicate => duplicate);
+
       const response = await api.get(`/repos/${newRepo}`);
 
       const data = {
@@ -115,17 +121,15 @@ export default class Main extends Component {
           <h1>
             {issueStates.map(state => (
               <RadioItem
-                type="radio"
-                name="radio"
-                value={issueActualState}
-                onChange={() => this.handleSelectChange(issueActualState)}
+                key={state}
+                onChange={() => this.handleSelectChange(state)}
                 state={state}
               />
             ))}
           </h1>
         </Wrapper>
 
-        <Form error={error} onSubmit={this.handleSubmit}>
+        <Form error={error} value={newRepo} onSubmit={this.handleSubmit}>
           <input
             type="text"
             placeholder="Adicionar repositorio"
