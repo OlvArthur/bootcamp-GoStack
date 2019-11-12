@@ -71,6 +71,7 @@ export default class Main extends Component {
       const data = {
         name: response.data.full_name,
       };
+      console.log(response.data.full_name);
 
       // if (data) {
       this.setState({

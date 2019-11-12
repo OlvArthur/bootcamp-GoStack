@@ -16,6 +16,7 @@ export default class Repository extends Component {
     match: PropTypes.shape({
       params: PropTypes.shape({
         repository: PropTypes.string,
+        page: PropTypes.string,
       }),
     }).isRequired,
     location: PropTypes.shape({
@@ -31,9 +32,12 @@ export default class Repository extends Component {
 
   async componentDidMount() {
     const { match, location } = this.props;
+    console.log(match.params);
 
     const repoName = decodeURIComponent(match.params.repository);
+    const page = match.params;
     const state = location.param1;
+    console.log(page);
 
     // Promise permite que as duas chamadas a api ( no caso github) sejam feitas
     // simultaneamente, impedindo que uma seja executada apenas
@@ -45,7 +49,7 @@ export default class Repository extends Component {
         // passado pela url eg.. /issues?state=open&per_page=5
         params: {
           state,
-          page: 2,
+          page,
           per_page: 5,
         },
       }),
@@ -56,6 +60,13 @@ export default class Repository extends Component {
       issues: issues.data,
       loading: false,
     });
+  }
+
+  componentDidUpdate(prevProps) {
+    const { match } = this.props;
+    const { page } = match.params;
+    if (page !== prevProps.match.params.page) {
+    }
   }
 
   render() {
@@ -99,9 +110,7 @@ export default class Repository extends Component {
           <li key>
             <Link
               to={{
-                pathname: `/repository/${encodeURIComponent(
-                  repository.full_name
-                )}`,
+                pathname: `/repository/facebook%2Freact/2`,
                 param1: 'closed',
               }}
             >
