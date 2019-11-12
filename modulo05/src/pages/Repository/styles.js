@@ -108,3 +108,5 @@ export const Label = styled.div`
   max-width: min-content;
 `;
 /** links para otras areas são estilizados com a {}  */
+
+export const PageButton = styled.button``;

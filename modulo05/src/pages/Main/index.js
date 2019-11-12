@@ -56,7 +56,6 @@ export default class Main extends Component {
     const duplicateCheck = repos.map(repo => repo.name === newRepo);
 
     const teste = duplicateCheck.includes(true);
-    console.log(repos, teste, duplicateCheck);
 
     this.setState({ loading: true });
 
@@ -81,7 +80,6 @@ export default class Main extends Component {
         error: false,
       });
     } catch (err) {
-      console.log(err.message);
       this.setState({
         newRepo: '',
         loading: false,
@@ -132,7 +130,7 @@ export default class Main extends Component {
           </h1>
         </Wrapper>
 
-        <Form error={error} value="teste2" onSubmit={this.handleSubmit}>
+        <Form error={error} onSubmit={this.handleSubmit}>
           <input
             type="text"
             placeholder="Adicionar repositorio"

@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 import api from '../../services/api';
 import Container from '../../Components/Container';
-import { Loading, Owner, IssueList, Label } from './styles';
+import { Loading, Owner, IssueList, Label, PageButton } from './styles';
 
 // import { Container } from './styles';
 // As props recebidas estão vindo do arquivo routes,
@@ -95,6 +95,20 @@ export default class Repository extends Component {
             </li>
           ))}
         </IssueList>
+        <PageButton>
+          <li key>
+            <Link
+              to={{
+                pathname: `/repository/${encodeURIComponent(
+                  repository.full_name
+                )}`,
+                param1: 'closed',
+              }}
+            >
+              Voltar
+            </Link>
+          </li>
+        </PageButton>
       </Container>
     );
   }
