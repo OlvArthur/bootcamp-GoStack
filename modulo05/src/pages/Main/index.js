@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { FaGithubAlt, FaPlus, FaSpinner } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
-import { throwError } from 'rxjs';
 import api from '../../services/api';
 
 import Container from '../../Components/Container';
@@ -54,8 +53,10 @@ export default class Main extends Component {
   handleSubmit = async e => {
     const { newRepo, repos } = this.state;
 
-    const checkDuplicate = repos.map(repo => repo == e.target.value);
-    console.log(e.target.value);
+    const duplicateCheck = repos.map(repo => repo.name === newRepo);
+
+    const teste = duplicateCheck.includes(true);
+    console.log(repos, teste, duplicateCheck);
 
     this.setState({ loading: true });
 
@@ -63,8 +64,9 @@ export default class Main extends Component {
     e.preventDefault();
 
     try {
-      checkDuplicate.map(duplicate => duplicate);
-
+      if (teste) {
+        throw new Error('Repositorio duplicado');
+      }
       const response = await api.get(`/repos/${newRepo}`);
 
       const data = {
@@ -78,7 +80,8 @@ export default class Main extends Component {
         loading: false,
         error: false,
       });
-    } catch {
+    } catch (err) {
+      console.log(err.message);
       this.setState({
         newRepo: '',
         loading: false,
@@ -129,7 +132,7 @@ export default class Main extends Component {
           </h1>
         </Wrapper>
 
-        <Form error={error} value={newRepo} onSubmit={this.handleSubmit}>
+        <Form error={error} value="teste2" onSubmit={this.handleSubmit}>
           <input
             type="text"
             placeholder="Adicionar repositorio"
