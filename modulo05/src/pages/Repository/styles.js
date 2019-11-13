@@ -109,4 +109,4 @@ export const Label = styled.div`
 `;
 /** links para otras areas são estilizados com a {}  */
 
-export const PageButton = styled.button``;
+export const PageButton = styled.div``;

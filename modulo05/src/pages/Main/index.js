@@ -20,7 +20,7 @@ export default class Main extends Component {
     repos: [],
     newRepo: '',
     loading: false,
-    error: false,
+    error: null,
     issueStates: ['open', 'closed', 'all'],
     issueActualState: '',
   };
@@ -57,7 +57,9 @@ export default class Main extends Component {
 
     const teste = duplicateCheck.includes(true);
 
-    this.setState({ loading: true });
+    //  const hasRepo = reposs.find(r => r.name === newRepo);
+
+    this.setState({ loading: true, error: false });
 
     // Previne o refresh na pagina
     e.preventDefault();
@@ -71,21 +73,17 @@ export default class Main extends Component {
       const data = {
         name: response.data.full_name,
       };
-      console.log(response.data.full_name);
 
       // if (data) {
       this.setState({
         repos: [...repos, data],
-        newRepo: '',
-        loading: false,
-        error: false,
       });
     } catch (err) {
       this.setState({
-        newRepo: '',
-        loading: false,
         error: true,
       });
+    } finally {
+      this.setState({ loading: false, newRepo: '' });
     }
     // } else {
     // this.setState({ loading: false });
@@ -139,7 +137,7 @@ export default class Main extends Component {
             onChange={this.handleInputChange}
           />
 
-          <SubmitButton loading={loading}>
+          <SubmitButton loading={loading ? 1 : 0}>
             {loading ? (
               <FaSpinner color="#FFF" size={14} />
             ) : (

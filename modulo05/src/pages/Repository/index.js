@@ -32,10 +32,10 @@ export default class Repository extends Component {
 
   async componentDidMount() {
     const { match, location } = this.props;
-    console.log(match.params);
+    console.log(location.param1);
 
     const repoName = decodeURIComponent(match.params.repository);
-    const page = match.params;
+    const { page } = match.params;
     const state = location.param1;
     console.log(page);
 
@@ -62,10 +62,11 @@ export default class Repository extends Component {
     });
   }
 
-  componentDidUpdate(prevProps) {
+  async componentDidUpdate(prevProps) {
     const { match } = this.props;
     const { page } = match.params;
     if (page !== prevProps.match.params.page) {
+      console.log('atualizou');
     }
   }
 
@@ -110,7 +111,9 @@ export default class Repository extends Component {
           <li key>
             <Link
               to={{
-                pathname: `/repository/facebook%2Freact/2`,
+                pathname: `/repository/${encodeURIComponent(
+                  repository.full_name
+                )}/4`,
                 param1: 'closed',
               }}
             >
