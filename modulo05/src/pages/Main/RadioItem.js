@@ -3,15 +3,10 @@ import PropTypes from 'prop-types';
 
 import { Item, RadioButton, RadioButtonLabel } from './styles';
 
-function RadioItem({ onChange, state }) {
+function RadioItem({ onClick, state }) {
   return (
     <Item>
-      <RadioButton
-        type="radio"
-        name="radio"
-        value={state}
-        onChange={onChange}
-      />
+      <RadioButton type="radio" name="radio" value={state} onClick={onClick} />
       <RadioButtonLabel />
       <div>{state}</div>
     </Item>
@@ -24,7 +19,7 @@ RadioItem.defaultProps = {
 
 RadioItem.propTypes = {
   state: PropTypes.string,
-  onChange: PropTypes.func.isRequired,
+  onClick: PropTypes.func.isRequired,
 };
 
 export default RadioItem;
