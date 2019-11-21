@@ -1,13 +1,13 @@
 import styled from 'styled-components';
 
 export const Loading = styled.div`
-  color: #253;
+  color: #fff;
   font-size: 30px;
-  display: flex;
   font-weight: bold;
+  display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 100%;
 `;
 
 export const Owner = styled.header`
@@ -109,4 +109,21 @@ export const Label = styled.div`
 `;
 /** links para otras areas são estilizados com a {}  */
 
-export const PageButton = styled.div``;
+export const PageAction = styled.div`
+  padding-top: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  button {
+    transition: opacity 0.25s ease-out;
+    border-radius: 4px;
+    outline: 0;
+    border: 0;
+    padding: 8px;
+    &:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+  }
+`;

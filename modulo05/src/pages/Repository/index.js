@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 import api from '../../services/api';
 import Container from '../../Components/Container';
-import { Loading, Owner, IssueList, Label, PageButton } from './styles';
+import { Loading, Owner, IssueList, Label, PageAction } from './styles';
 
 // import { Container } from './styles';
 // As props recebidas estão vindo do arquivo routes,
@@ -28,16 +28,15 @@ export default class Repository extends Component {
     repository: {},
     loading: true,
     issues: [],
+    page: 1,
   };
 
   async componentDidMount() {
     const { match, location } = this.props;
-    console.log(location.param1);
+    const { page } = this.state;
 
-    const repoName = decodeURIComponent(match.params.repository);
-    const { page } = match.params;
     const state = location.param1;
-    console.log(page);
+    const repoName = decodeURIComponent(match.params.repository);
 
     // Promise permite que as duas chamadas a api ( no caso github) sejam feitas
     // simultaneamente, impedindo que uma seja executada apenas
@@ -62,23 +61,49 @@ export default class Repository extends Component {
     });
   }
 
-  async componentDidUpdate(prevProps) {
-    const { match } = this.props;
-    const { page } = match.params;
-    if (page !== prevProps.match.params.page) {
-      console.log('atualizou');
+  /* componentDidUpdate(prevProps, prevState) {
+    const { issueActualState } = this.state;
+
+    if (prevState.issueActualState !== issueActualState) {
+      localStorage.setItem(
+        'issueActualState',
+        JSON.stringify(issueActualState)
+      );
     }
   }
+*/
+
+  loadIssues = async () => {
+    const { match, location } = this.props;
+    const { page } = this.state;
+
+    const repoName = decodeURIComponent(match.params.repository);
+
+    const response = await api.get(`/repos/${repoName}/issues`, {
+      params: {
+        state: location.param1,
+        per_page: 5,
+        page,
+      },
+    });
+
+    this.setState({ issues: response.data });
+  };
+
+  handlePage = async action => {
+    const { page } = this.state;
+
+    await this.setState({
+      page: action === 'previous' ? page - 1 : page + 1,
+    });
+    this.loadIssues();
+  };
 
   render() {
-    const { repository, issues, loading } = this.state;
+    const { repository, issues, loading, page } = this.state;
 
     if (loading) {
-      return (
-        <Container>
-          <Loading>Carregando</Loading>;
-        </Container>
-      );
+      return <Loading>Carregando</Loading>;
     }
 
     return (
@@ -107,20 +132,19 @@ export default class Repository extends Component {
             </li>
           ))}
         </IssueList>
-        <PageButton>
-          <li key>
-            <Link
-              to={{
-                pathname: `/repository/${encodeURIComponent(
-                  repository.full_name
-                )}/4`,
-                param1: 'closed',
-              }}
-            >
-              Voltar
-            </Link>
-          </li>
-        </PageButton>
+        <PageAction>
+          <button
+            type="button"
+            disabled={page < 2}
+            onClick={() => this.handlePage('previous')}
+          >
+            Anterior
+          </button>
+          <span>Página {page}</span>
+          <button type="button" onClick={() => this.handlePage('next')}>
+            Próximo
+          </button>
+        </PageAction>
       </Container>
     );
   }
