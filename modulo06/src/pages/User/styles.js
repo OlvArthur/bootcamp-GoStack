@@ -80,3 +80,5 @@ export const ActivityView = styled.View`
   flex: 1;
   justify-content: center;
 `;
+
+export const TouchableView = styled.View``;
