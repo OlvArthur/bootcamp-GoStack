@@ -20,6 +20,7 @@ import {
 } from './styles';
 
 export default class Main extends Component {
+  // eslint-disable-next-line react/sort-comp
   static navigationOptions = {
     title: 'Usuários',
   };
