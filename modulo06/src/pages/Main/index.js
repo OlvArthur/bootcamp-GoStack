@@ -104,6 +104,7 @@ export default class Main extends Component {
             )}
           </SubmitButton>
         </Form>
+
         <List
           data={users} // Necessariamente array
           keyExtractor={user => user.login}
